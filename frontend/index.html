@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BizConnect — Networking Profissional para Empresários</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+              400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+              800: '#1e40af', 900: '#1e3a8a', 950: '#172554',
+            },
+            dark: { 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased">
+
+  <!-- ==================== AUTH ==================== -->
+  <div id="auth-screen" class="min-h-screen flex">
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-900 via-primary-800 to-dark-900 text-white p-12 flex-col justify-between relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500 rounded-full blur-3xl"></div>
+      </div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-2xl font-bold tracking-tight">BizConnect</span>
+        </div>
+        <h1 class="text-4xl font-bold leading-tight mb-4">Networking de qualidade<br>para empresários</h1>
+        <p class="text-blue-100 text-lg max-w-md">Ambiente seguro e profissional para troca de informações, oportunidades de negócio e colaboração entre líderes empresariais.</p>
+      </div>
+      <div class="relative z-10 space-y-4">
+        <div class="flex items-center gap-3 text-blue-100"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm">✓</div><span>Verificação de identidade empresarial</span></div>
+        <div class="flex items-center gap-3 text-blue-100"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm">✓</div><span>Mensagens criptografadas e privadas</span></div>
+        <div class="flex items-center gap-3 text-blue-100"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm">✓</div><span>Oportunidades de negócio reais</span></div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+      <div class="w-full max-w-md">
+        <div class="lg:hidden flex items-center gap-2 mb-8 justify-center">
+          <div class="w-10 h-10 bg-primary-700 rounded-xl flex items-center justify-center text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-xl font-bold text-primary-900">BizConnect</span>
+        </div>
+
+        <div class="flex border-b border-slate-200 mb-8">
+          <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-3 text-center font-semibold text-primary-700 border-b-2 border-primary-600">Entrar</button>
+          <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-3 text-center font-medium text-slate-500 border-b-2 border-transparent">Cadastrar</button>
+        </div>
+
+        <!-- Login -->
+        <div id="form-login" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail</label>
+            <input type="email" value="carlos.silva@empresa.com.br" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Senha</label>
+            <input type="password" value="••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none">
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded border-slate-300 text-primary-600"><span class="text-slate-600">Lembrar de mim</span></label>
+            <button onclick="showRecover()" class="text-primary-600 hover:text-primary-700 font-medium">Esqueci a senha</button>
+          </div>
+          <button onclick="doLogin()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-primary-700/25">Entrar na plataforma</button>
+          <p class="text-center text-sm text-slate-500">Demo: clique em "Entrar" para acessar</p>
+        </div>
+
+        <!-- Register -->
+        <div id="form-register" class="space-y-4 hidden">
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Nome</label><input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="João"></div>
+            <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Sobrenome</label><input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Silva"></div>
+          </div>
+          <div><label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail corporativo</label><input type="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="voce@suaempresa.com.br"></div>
+          <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Telefone</label><input type="tel" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="(11) 99999-9999"></div>
+          <div><label class="block text-sm font-medium text-slate-700 mb-1.5">CNPJ da empresa</label><input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="00.000.000/0001-00"></div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Cargo</label>
+            <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none bg-white">
+              <option>CEO / Fundador</option><option>Diretor</option><option>Sócio</option><option>Gerente / Gestor</option><option>Investidor</option><option>Consultor</option>
+            </select>
+          </div>
+          <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Senha</label><input type="password" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="Mínimo 8 caracteres"></div>
+          <button onclick="doRegister()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-primary-700/25">Criar conta</button>
+          <p class="text-xs text-slate-500 text-center">Ao se cadastrar, você concorda com os Termos de Uso e Política de Privacidade (LGPD).</p>
+        </div>
+
+        <!-- Recover -->
+        <div id="form-recover" class="space-y-5 hidden">
+          <h3 class="text-lg font-semibold text-slate-900">Recuperar senha</h3>
+          <p class="text-sm text-slate-500">Informe seu e-mail e enviaremos um link de recuperação.</p>
+          <div><label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail</label><input type="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 outline-none" placeholder="seu@email.com"></div>
+          <button onclick="sendRecover()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3.5 rounded-xl transition">Enviar link</button>
+          <button onclick="switchAuthTab('login')" class="w-full text-slate-600 text-sm font-medium py-2">Voltar ao login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== APP ==================== -->
+  <div id="app-screen" class="hidden min-h-screen flex flex-col pb-16 lg:pb-0">
+    <!-- Top Navbar -->
+    <header class="bg-white border-b border-slate-200 h-14 sm:h-16 flex items-center justify-between px-3 sm:px-6 sticky top-0 z-40 shadow-sm">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100">
+          <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 bg-primary-700 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="font-bold text-primary-900 text-lg hidden sm:block">BizConnect</span>
+        </div>
+      </div>
+
+      <div class="flex-1 max-w-xl mx-2 sm:mx-4 hidden md:block">
+        <div class="relative cursor-pointer" onclick="openSearch()">
+          <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" readonly placeholder="Buscar empresários, empresas, segmentos..." class="w-full pl-10 pr-4 py-2.5 bg-slate-100 border-0 rounded-xl text-sm cursor-pointer">
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1 sm:gap-2">
+        <button onclick="openSearch()" class="md:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </button>
+        <button onclick="showPage('notifications')" class="relative p-2 rounded-lg hover:bg-slate-100 text-slate-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span id="notif-badge" class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+        <button onclick="showPage('messages')" class="relative p-2 rounded-lg hover:bg-slate-100 text-slate-600 hidden sm:block">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-primary-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+        </button>
+        <div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer" onclick="showPage('profile')">
+          <img src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1e40af&color=fff&size=40" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full ring-2 ring-primary-100" alt="">
+          <div class="hidden sm:block text-left">
+            <p class="text-sm font-semibold text-slate-800 leading-tight">Carlos Silva</p>
+            <p class="text-xs text-slate-500">CEO • TechBrasil</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="w-64 bg-dark-900 text-slate-300 flex-shrink-0 flex flex-col fixed lg:static inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 pt-14 lg:pt-0">
+        <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto scrollbar-thin">
+          <button onclick="showPage('feed')" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="feed">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            Feed
+          </button>
+          <button onclick="showPage('messages')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="messages">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            Mensagens <span class="ml-auto bg-primary-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+          </button>
+          <button onclick="showPage('network')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="network">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            Networking
+          </button>
+          <button onclick="showPage('communities')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="communities">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Comunidades
+          </button>
+          <button onclick="showPage('opportunities')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="opportunities">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            Oportunidades
+          </button>
+          <button onclick="showPage('notifications')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="notifications">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            Notificações
+          </button>
+          <button onclick="showPage('profile')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="profile">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            Meu Perfil
+          </button>
+          <button onclick="showPage('settings')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="settings">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Configurações
+          </button>
+
+          <button onclick="showPage('matchmaking')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="matchmaking">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Matchmaking
+          </button>
+          <button onclick="showPage('indications')" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-white/5 transition" data-page="indications">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            Indicações
+          </button>
+
+          <div class="pt-4 mt-4 border-t border-slate-700">
+            <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Premium</p>
+            <button onclick="showPage('plans')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-amber-400 hover:bg-white/5 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              Upgrade Pro
+            </button>
+          </div>
+        </nav>
+        <div class="p-4 border-t border-slate-700">
+          <div class="bg-slate-800 rounded-xl p-3 mb-3">
+            <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 bg-emerald-400 rounded-full"></span><span class="text-xs font-medium text-slate-300">Perfil Verificado</span></div>
+            <p class="text-xs text-slate-500">CNPJ e LinkedIn validados</p>
+          </div>
+          <button onclick="doLogout()" class="w-full text-left text-sm text-slate-400 hover:text-red-400 px-3 py-2 rounded-lg hover:bg-white/5 transition">Sair da conta</button>
+        </div>
+      </aside>
+
+      <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden"></div>
+
+      <!-- Main Content -->
+      <main class="flex-1 overflow-y-auto bg-slate-100">
+
+        <!-- FEED -->
+        <div id="page-feed" class="page fade-in max-w-3xl mx-auto p-3 sm:p-6 space-y-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+            <div class="flex gap-3">
+              <img src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1e40af&color=fff" class="w-11 h-11 rounded-full flex-shrink-0" alt="">
+              <div class="flex-1">
+                <textarea id="new-post" rows="2" placeholder="Compartilhe uma oportunidade, insight ou busca por parceria..." class="w-full resize-none border-0 focus:ring-0 text-slate-700 placeholder-slate-400 text-sm outline-none"></textarea>
+                <div class="flex items-center justify-between pt-3 border-t border-slate-100 flex-wrap gap-2">
+                  <div class="flex gap-1 items-center">
+                    <select id="post-type" class="text-xs border border-slate-200 rounded-lg px-2 py-1.5 bg-white outline-none">
+                      <option value="geral">Geral</option>
+                      <option value="oportunidade">Oportunidade</option>
+                      <option value="parceria">Parceria</option>
+                      <option value="evento">Evento</option>
+                    </select>
+                    <button class="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg" title="Imagem"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+                  </div>
+                  <button onclick="publishPost()" class="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-5 py-2 rounded-xl transition">Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2 overflow-x-auto pb-1">
+            <button onclick="filterFeed('Todos', this)" class="feed-filter px-4 py-1.5 bg-primary-700 text-white text-sm font-medium rounded-full whitespace-nowrap">Todos</button>
+            <button onclick="filterFeed('Oportunidades', this)" class="feed-filter px-4 py-1.5 bg-white text-slate-600 text-sm font-medium rounded-full border border-slate-200 whitespace-nowrap">Oportunidades</button>
+            <button onclick="filterFeed('Parcerias', this)" class="feed-filter px-4 py-1.5 bg-white text-slate-600 text-sm font-medium rounded-full border border-slate-200 whitespace-nowrap">Parcerias</button>
+            <button onclick="filterFeed('Eventos', this)" class="feed-filter px-4 py-1.5 bg-white text-slate-600 text-sm font-medium rounded-full border border-slate-200 whitespace-nowrap">Eventos</button>
+            <button onclick="filterFeed('Tecnologia', this)" class="feed-filter px-4 py-1.5 bg-white text-slate-600 text-sm font-medium rounded-full border border-slate-200 whitespace-nowrap">Tecnologia</button>
+          </div>
+
+          <div id="feed-posts" class="space-y-4">
+            <!-- Post 1 -->
+            <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div class="flex items-start gap-3 mb-3">
+                <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff" class="w-11 h-11 rounded-full" alt="">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h3 class="font-semibold text-slate-900">Ana Costa</h3>
+                    <span class="inline-flex items-center gap-1 text-xs bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full font-medium"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Verificado</span>
+                  </div>
+                  <p class="text-sm text-slate-500">CEO • AgroTech Solutions • São Paulo</p>
+                  <p class="text-xs text-slate-400 mt-0.5">há 2 horas</p>
+                </div>
+              </div>
+              <div class="mb-3">
+                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Oportunidade</span>
+                <p class="text-slate-700 leading-relaxed">Estamos buscando parceiros comerciais para distribuição de sensores IoT no agronegócio no Centro-Oeste. Ideal para empresas com presença em MS, MT e GO. Volume inicial projetado de 5.000 unidades/ano.</p>
+              </div>
+              <div class="flex items-center gap-4 pt-3 border-t border-slate-100 text-sm text-slate-500">
+                <button onclick="toggleLike(this)" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg><span class="like-count">24</span></button>
+                <button onclick="toggleComments('p1')" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 8</button>
+                <button onclick="sharePost()" class="flex items-center gap-1.5 hover:text-primary-600 transition ml-auto"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></button>
+              </div>
+              <div id="comments-p1" class="hidden mt-3 pt-3 border-t border-slate-100">
+                <div id="comment-list-p1" class="comment-box space-y-1 mb-3">
+                  <div class="flex gap-2 py-2">
+                    <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff&size=32" class="w-8 h-8 rounded-full" alt="">
+                    <div class="bg-slate-100 rounded-xl px-3 py-2 flex-1"><p class="text-sm font-semibold text-slate-900">Roberto Mendes</p><p class="text-sm text-slate-700">Interessante! Temos operação em MS. Vamos conversar?</p></div>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <input id="comment-input-p1" type="text" placeholder="Escreva um comentário..." class="flex-1 px-3 py-2 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500">
+                  <button onclick="addComment('p1')" class="bg-primary-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Enviar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Post 2 -->
+            <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div class="flex items-start gap-3 mb-3">
+                <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff" class="w-11 h-11 rounded-full" alt="">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2"><h3 class="font-semibold text-slate-900">Roberto Mendes</h3>
+                    <span class="inline-flex items-center gap-1 text-xs bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full font-medium"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Verificado</span>
+                  </div>
+                  <p class="text-sm text-slate-500">Sócio • Mendes & Associados • Rio de Janeiro</p>
+                  <p class="text-xs text-slate-400 mt-0.5">há 5 horas</p>
+                </div>
+              </div>
+              <p class="text-slate-700 leading-relaxed mb-3">Acabei de participar de um painel sobre M&A no setor de saúde. O volume de deals em 2026 deve superar 2025 em 30%. Quem estiver avaliando aquisição ou venda, vale a pena conversar.</p>
+              <div class="flex items-center gap-4 pt-3 border-t border-slate-100 text-sm text-slate-500">
+                <button onclick="toggleLike(this)" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg><span class="like-count">41</span></button>
+                <button onclick="toggleComments('p2')" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 12</button>
+                <button onclick="sharePost()" class="ml-auto text-slate-400 hover:text-primary-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></button>
+              </div>
+              <div id="comments-p2" class="hidden mt-3 pt-3 border-t border-slate-100">
+                <div id="comment-list-p2" class="comment-box space-y-1 mb-3"></div>
+                <div class="flex gap-2">
+                  <input id="comment-input-p2" type="text" placeholder="Escreva um comentário..." class="flex-1 px-3 py-2 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500">
+                  <button onclick="addComment('p2')" class="bg-primary-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Enviar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Post 3 -->
+            <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div class="flex items-start gap-3 mb-3">
+                <img src="https://ui-avatars.com/api/?name=Fernanda+Lima&background=be123c&color=fff" class="w-11 h-11 rounded-full" alt="">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2"><h3 class="font-semibold text-slate-900">Fernanda Lima</h3>
+                    <span class="inline-flex items-center gap-1 text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full font-medium">Premium</span>
+                  </div>
+                  <p class="text-sm text-slate-500">Diretora de Inovação • Banco Horizonte • Curitiba</p>
+                  <p class="text-xs text-slate-400 mt-0.5">ontem</p>
+                </div>
+              </div>
+              <div class="mb-3">
+                <span class="inline-block bg-violet-50 text-violet-700 text-xs font-semibold px-2.5 py-1 rounded-full mb-2">Evento</span>
+                <p class="text-slate-700 leading-relaxed">Convidamos empresários do setor fintech e open finance para um jantar exclusivo no dia 28/08 em São Paulo. Vagas limitadas. Interessados, enviem mensagem privada.</p>
+              </div>
+              <div class="flex items-center gap-4 pt-3 border-t border-slate-100 text-sm text-slate-500">
+                <button onclick="toggleLike(this)" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg><span class="like-count">67</span></button>
+                <button onclick="toggleComments('p3')" class="flex items-center gap-1.5 hover:text-primary-600 transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg> 19</button>
+                <button onclick="sharePost()" class="ml-auto text-slate-400 hover:text-primary-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></button>
+              </div>
+              <div id="comments-p3" class="hidden mt-3 pt-3 border-t border-slate-100">
+                <div id="comment-list-p3" class="comment-box space-y-1 mb-3"></div>
+                <div class="flex gap-2">
+                  <input id="comment-input-p3" type="text" placeholder="Escreva um comentário..." class="flex-1 px-3 py-2 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500">
+                  <button onclick="addComment('p3')" class="bg-primary-700 text-white px-4 py-2 rounded-xl text-sm font-medium">Enviar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div id="page-messages" class="page hidden h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] flex">
+          <div id="conv-list" class="w-full sm:w-80 lg:w-96 bg-white border-r border-slate-200 flex flex-col sm:flex">
+            <div class="p-4 border-b border-slate-200">
+              <div class="flex items-center justify-between mb-3">
+                <h2 class="text-lg font-bold text-slate-900">Mensagens</h2>
+                <button onclick="showToast('Nova conversa (demo)')" class="p-2 text-primary-700 hover:bg-primary-50 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></button>
+              </div>
+              <div class="relative">
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" placeholder="Buscar conversas..." class="w-full pl-9 pr-3 py-2 bg-slate-100 rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary-500">
+              </div>
+            </div>
+            <div class="flex-1 overflow-y-auto scrollbar-thin">
+              <div onclick="selectConversation(this, 'Ana Costa')" class="conv-item flex items-center gap-3 p-4 hover:bg-slate-50 cursor-pointer border-l-4 border-primary-600 bg-primary-50/50">
+                <div class="relative"><img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff" class="w-12 h-12 rounded-full" alt=""><span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span></div>
+                <div class="flex-1 min-w-0"><div class="flex justify-between"><h4 class="font-semibold text-slate-900 text-sm truncate">Ana Costa</h4><span class="text-xs text-slate-400">10:42</span></div><p class="text-sm text-slate-600 truncate">Perfeito! Vou enviar o material ainda hoje...</p></div>
+              </div>
+              <div onclick="selectConversation(this, 'Roberto Mendes')" class="conv-item flex items-center gap-3 p-4 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff" class="w-12 h-12 rounded-full" alt="">
+                <div class="flex-1 min-w-0"><div class="flex justify-between"><h4 class="font-semibold text-slate-900 text-sm truncate">Roberto Mendes</h4><span class="text-xs text-slate-400">Ontem</span></div><p class="text-sm text-slate-500 truncate">Obrigado pela indicação. Vamos marcar...</p></div>
+              </div>
+              <div onclick="selectConversation(this, 'Grupo Tech SP')" class="conv-item flex items-center gap-3 p-4 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-sm">GT</div>
+                <div class="flex-1 min-w-0"><div class="flex justify-between"><h4 class="font-semibold text-slate-900 text-sm truncate">Grupo Tech SP</h4><span class="text-xs text-slate-400">Seg</span></div><p class="text-sm text-slate-500 truncate">Fernanda: Alguém vai no evento de IA?</p></div>
+                <span class="w-5 h-5 bg-primary-600 text-white text-xs font-bold rounded-full flex items-center justify-center">2</span>
+              </div>
+              <div onclick="selectConversation(this, 'Fernanda Lima')" class="conv-item flex items-center gap-3 p-4 hover:bg-slate-50 cursor-pointer border-l-4 border-transparent">
+                <img src="https://ui-avatars.com/api/?name=Fernanda+Lima&background=be123c&color=fff" class="w-12 h-12 rounded-full" alt="">
+                <div class="flex-1 min-w-0"><div class="flex justify-between"><h4 class="font-semibold text-slate-900 text-sm truncate">Fernanda Lima</h4><span class="text-xs text-slate-400">Seg</span></div><p class="text-sm text-slate-500 truncate">Confirmei sua presença no jantar.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="chat-panel" class="flex-1 flex-col bg-slate-50 hidden sm:flex">
+            <div class="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-3">
+              <button onclick="backToConversations()" class="sm:hidden p-1 text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+              <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff" class="w-10 h-10 rounded-full" alt="" id="chat-avatar">
+              <div class="flex-1"><h3 class="font-semibold text-slate-900" id="chat-name">Ana Costa</h3><p class="text-xs text-emerald-600">Online</p></div>
+              <button id="btn-secure-room" onclick="activateSecureRoom()" class="hidden sm:flex items-center gap-1 px-2 py-1.5 text-xs font-medium text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition" title="Sala Segura">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Sala Segura
+              </button>
+              <span id="secure-room-badge" class="hidden text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-200">🔒 Segura</span>
+              <button onclick="archiveConversation()" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100" title="Arquivar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg></button>
+              <button onclick="deleteConversation()" class="p-2 text-slate-400 hover:text-red-500 rounded-lg hover:bg-slate-100" title="Excluir"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+              <div class="flex justify-start"><div class="message-bubble bg-white rounded-2xl rounded-tl-md px-4 py-2.5 shadow-sm border border-slate-100"><p class="text-sm text-slate-700">Carlos, bom dia! Vi sua publicação sobre sensores. Temos interesse em conhecer melhor a solução de vocês.</p><span class="text-[10px] text-slate-400 mt-1 block">09:15</span></div></div>
+              <div class="flex justify-end"><div class="message-bubble bg-primary-700 text-white rounded-2xl rounded-tr-md px-4 py-2.5 shadow-sm"><p class="text-sm">Bom dia, Ana! Ótimo. Posso enviar o one-pager e agendar uma call rápida ainda esta semana?</p><span class="text-[10px] text-primary-200 mt-1 block text-right">09:22 ✓✓</span></div></div>
+              <div class="flex justify-start"><div class="message-bubble bg-white rounded-2xl rounded-tl-md px-4 py-2.5 shadow-sm border border-slate-100"><p class="text-sm text-slate-700">Perfeito! Vou enviar o material ainda hoje. Quinta-feira à tarde funciona para você?</p><span class="text-[10px] text-slate-400 mt-1 block">10:42</span></div></div>
+            </div>
+            <div class="bg-white border-t border-slate-200 p-3 sm:p-4">
+              <div class="flex items-end gap-2">
+                <button class="p-2.5 text-slate-400 hover:text-primary-600 rounded-lg hover:bg-slate-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></button>
+                <textarea id="message-input" rows="1" placeholder="Digite sua mensagem..." class="flex-1 resize-none border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary-500 outline-none max-h-32"></textarea>
+                <button onclick="sendMessage()" class="bg-primary-700 hover:bg-primary-800 text-white p-2.5 rounded-xl transition"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NETWORK -->
+        <div id="page-network" class="page hidden max-w-5xl mx-auto p-3 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div><h1 class="text-2xl font-bold text-slate-900">Networking</h1><p class="text-slate-500 text-sm mt-1">Encontre e conecte-se com empresários verificados</p></div>
+            <div class="flex gap-2 flex-wrap">
+              <select class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm outline-none"><option>Todos os segmentos</option><option>Tecnologia</option><option>Agronegócio</option><option>Saúde</option><option>Finanças</option></select>
+              <select class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm outline-none"><option>Todas as cidades</option><option>São Paulo</option><option>Rio de Janeiro</option><option>Curitiba</option></select>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Marcos+Oliveira&background=0369a1&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Marcos Oliveira</h3><svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div><p class="text-sm text-slate-500">CEO • LogiMax</p><p class="text-xs text-slate-400">Logística • São Paulo</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Especialista em supply chain e logística 4.0. Aberto a parcerias em última milha.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Marcos Oliveira')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Marcos Oliveira')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Patricia+Souza&background=c2410c&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Patrícia Souza</h3><svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div><p class="text-sm text-slate-500">Fundadora • NutriLab</p><p class="text-xs text-slate-400">Foodtech • Belo Horizonte</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Busco investidores anjo para rodada seed. Produto já em 12 supermercados.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Patrícia Souza')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Patrícia Souza')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Lucas+Ferreira&background=15803d&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Lucas Ferreira</h3><span class="text-xs bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">Premium</span></div><p class="text-sm text-slate-500">Sócio • Ferreira Capital</p><p class="text-xs text-slate-400">Investimentos • São Paulo</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Business angel. Foco em B2B SaaS e marketplaces. Ticket de R$ 200k–1M.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Lucas Ferreira')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Lucas Ferreira')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Camila+Rocha&background=6d28d9&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Camila Rocha</h3><svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div><p class="text-sm text-slate-500">Diretora • Saúde+ Digital</p><p class="text-xs text-slate-400">Healthtech • Rio de Janeiro</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Procurando CTO co-founder para escala nacional de telemedicina.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Camila Rocha')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Camila Rocha')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Diego+Santos&background=b45309&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Diego Santos</h3><svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div><p class="text-sm text-slate-500">CEO • EcoPack</p><p class="text-xs text-slate-400">Sustentabilidade • Curitiba</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Embalagens biodegradáveis. Buscamos distribuidores no Nordeste.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Diego Santos')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Diego Santos')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition">
+              <div class="flex items-start gap-3"><img src="https://ui-avatars.com/api/?name=Beatriz+Nunes&background=0e7490&color=fff" class="w-14 h-14 rounded-full" alt=""><div class="flex-1 min-w-0"><div class="flex items-center gap-1.5"><h3 class="font-semibold text-slate-900 truncate">Beatriz Nunes</h3><svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div><p class="text-sm text-slate-500">Consultora • BN Strategy</p><p class="text-xs text-slate-400">Consultoria • São Paulo</p></div></div>
+              <p class="text-sm text-slate-600 mt-3 line-clamp-2">Estratégia e transformação digital para médias empresas. 15+ anos de experiência.</p>
+              <div class="flex gap-2 mt-4"><button onclick="connectUser(this, 'Beatriz Nunes')" class="flex-1 bg-primary-700 hover:bg-primary-800 text-white text-sm font-medium py-2 rounded-xl transition">Conectar</button><button onclick="messageUser('Beatriz Nunes')" class="px-3 border border-slate-200 hover:bg-slate-50 rounded-xl text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></button></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMUNITIES -->
+        <div id="page-communities" class="page hidden max-w-4xl mx-auto p-3 sm:p-6">
+          <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+            <div><h1 class="text-2xl font-bold text-slate-900">Comunidades</h1><p class="text-slate-500 text-sm mt-1">Fóruns temáticos por segmento</p></div>
+            <button onclick="openModal('modal-topic')" class="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition">+ Criar tópico</button>
+          </div>
+          <div class="space-y-3">
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex items-center gap-4 hover:shadow-md transition cursor-pointer" onclick="enterCommunity('Agronegócio & Foodtech')">
+              <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center text-2xl flex-shrink-0">🌾</div>
+              <div class="flex-1 min-w-0"><h3 class="font-semibold text-slate-900">Agronegócio & Foodtech</h3><p class="text-sm text-slate-500 truncate">Inovação no campo, commodity e startups de food</p><p class="text-xs text-slate-400 mt-1">1.248 membros • 34 tópicos ativos</p></div>
+              <button onclick="event.stopPropagation(); joinCommunity(this)" class="text-primary-700 font-medium text-sm hover:underline flex-shrink-0">Entrar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex items-center gap-4 hover:shadow-md transition cursor-pointer" onclick="enterCommunity('Tecnologia & SaaS')">
+              <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center text-2xl flex-shrink-0">💻</div>
+              <div class="flex-1 min-w-0"><h3 class="font-semibold text-slate-900">Tecnologia & SaaS</h3><p class="text-sm text-slate-500 truncate">Software, produto, growth e fundraising</p><p class="text-xs text-slate-400 mt-1">2.891 membros • 67 tópicos ativos</p></div>
+              <button onclick="event.stopPropagation(); joinCommunity(this)" data-joined="1" class="text-emerald-600 font-medium text-sm flex-shrink-0">Membro</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex items-center gap-4 hover:shadow-md transition cursor-pointer" onclick="enterCommunity('Saúde & Life Sciences')">
+              <div class="w-14 h-14 rounded-xl bg-violet-100 flex items-center justify-center text-2xl flex-shrink-0">🏥</div>
+              <div class="flex-1 min-w-0"><h3 class="font-semibold text-slate-900">Saúde & Life Sciences</h3><p class="text-sm text-slate-500 truncate">Healthtech, medtech e regulamentação ANVISA</p><p class="text-xs text-slate-400 mt-1">876 membros • 21 tópicos ativos</p></div>
+              <button onclick="event.stopPropagation(); joinCommunity(this)" class="text-primary-700 font-medium text-sm hover:underline flex-shrink-0">Entrar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex items-center gap-4 hover:shadow-md transition cursor-pointer" onclick="enterCommunity('Investimentos & PE')">
+              <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-2xl flex-shrink-0">💰</div>
+              <div class="flex-1 min-w-0"><h3 class="font-semibold text-slate-900">Investimentos & Private Equity</h3><p class="text-sm text-slate-500 truncate">M&A, valuation, rodadas e networking</p><p class="text-xs text-slate-400 mt-1">654 membros • 18 tópicos ativos</p></div>
+              <button onclick="event.stopPropagation(); joinCommunity(this)" class="text-primary-700 font-medium text-sm hover:underline flex-shrink-0">Entrar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex items-center gap-4 hover:shadow-md transition cursor-pointer" onclick="enterCommunity('Varejo & E-commerce')">
+              <div class="w-14 h-14 rounded-xl bg-rose-100 flex items-center justify-center text-2xl flex-shrink-0">🛍️</div>
+              <div class="flex-1 min-w-0"><h3 class="font-semibold text-slate-900">Varejo & E-commerce</h3><p class="text-sm text-slate-500 truncate">Omnichannel, marketplace e logística</p><p class="text-xs text-slate-400 mt-1">1.102 membros • 29 tópicos ativos</p></div>
+              <button onclick="event.stopPropagation(); joinCommunity(this)" class="text-primary-700 font-medium text-sm hover:underline flex-shrink-0">Entrar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMUNITY DETAIL -->
+        <div id="page-community-detail" class="page hidden max-w-3xl mx-auto p-3 sm:p-6">
+          <button onclick="showPage('communities')" class="text-sm text-primary-700 font-medium mb-4 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> Voltar</button>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-4">
+            <h1 class="text-xl font-bold text-slate-900" id="community-name">Tecnologia & SaaS</h1>
+            <p class="text-sm text-slate-500 mt-1">2.891 membros • 67 tópicos ativos</p>
+          </div>
+          <div class="space-y-3">
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-sm transition cursor-pointer">
+              <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full font-medium">Discussão</span><span class="text-xs text-slate-400">há 3 horas</span></div>
+              <h3 class="font-semibold text-slate-900">Como vocês estão precificando SaaS em 2026?</h3>
+              <p class="text-sm text-slate-500 mt-1">Trocando experiências sobre modelos de pricing, freemium vs paid...</p>
+              <p class="text-xs text-slate-400 mt-2">12 respostas • por Ana Costa</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-sm transition cursor-pointer">
+              <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">Oportunidade</span><span class="text-xs text-slate-400">há 1 dia</span></div>
+              <h3 class="font-semibold text-slate-900">Busco CTO co-founder para fintech de crédito</h3>
+              <p class="text-sm text-slate-500 mt-1">Equity generoso. Experiência com open banking é um diferencial.</p>
+              <p class="text-xs text-slate-400 mt-2">8 respostas • por Lucas Ferreira</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-sm transition cursor-pointer">
+              <div class="flex items-center gap-2 mb-2"><span class="text-xs bg-violet-50 text-violet-700 px-2 py-0.5 rounded-full font-medium">Evento</span><span class="text-xs text-slate-400">há 2 dias</span></div>
+              <h3 class="font-semibold text-slate-900">Meetup founders SP — 30/08</h3>
+              <p class="text-sm text-slate-500 mt-1">Encontro presencial para founders de SaaS B2B. Vagas limitadas.</p>
+              <p class="text-xs text-slate-400 mt-2">24 respostas • por Fernanda Lima</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPPORTUNITIES -->
+        <div id="page-opportunities" class="page hidden max-w-4xl mx-auto p-3 sm:p-6">
+          <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+            <div><h1 class="text-2xl font-bold text-slate-900">Oportunidades</h1><p class="text-slate-500 text-sm mt-1">Negócios, parcerias e vagas entre empresários</p></div>
+            <button onclick="showPage('feed'); document.getElementById('post-type').value='oportunidade'; document.getElementById('new-post').focus();" class="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition">+ Publicar</button>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <div class="flex items-center gap-2 mb-2"><span class="bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-full">Parceria Comercial</span><span class="text-xs text-slate-400">há 3 horas</span></div>
+              <h3 class="font-semibold text-slate-900 text-lg mb-1">Distribuição de sensores IoT para agronegócio</h3>
+              <p class="text-sm text-slate-600 mb-3">Buscamos distribuidores autorizados nas regiões Centro-Oeste e Sul. Margem atrativa e suporte técnico completo.</p>
+              <div class="flex items-center gap-3 text-sm flex-wrap">
+                <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff&size=32" class="w-7 h-7 rounded-full" alt="">
+                <span class="text-slate-700 font-medium">Ana Costa</span><span class="text-slate-400">• AgroTech</span>
+                <button onclick="openModal('modal-opportunity')" class="ml-auto text-primary-700 font-medium hover:underline">Ver detalhes</button>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <div class="flex items-center gap-2 mb-2"><span class="bg-violet-50 text-violet-700 text-xs font-semibold px-2.5 py-1 rounded-full">Investimento</span><span class="text-xs text-slate-400">há 1 dia</span></div>
+              <h3 class="font-semibold text-slate-900 text-lg mb-1">Rodada Seed — NutriLab (Foodtech)</h3>
+              <p class="text-sm text-slate-600 mb-3">Captando R$ 1,2M. Produto validado em 12 pontos de venda. Tração de 40% MoM.</p>
+              <div class="flex items-center gap-3 text-sm flex-wrap">
+                <img src="https://ui-avatars.com/api/?name=Patricia+Souza&background=c2410c&color=fff&size=32" class="w-7 h-7 rounded-full" alt="">
+                <span class="text-slate-700 font-medium">Patrícia Souza</span><span class="text-slate-400">• NutriLab</span>
+                <button onclick="openModal('modal-opportunity')" class="ml-auto text-primary-700 font-medium hover:underline">Ver detalhes</button>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <div class="flex items-center gap-2 mb-2"><span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full">Vaga / Co-founder</span><span class="text-xs text-slate-400">há 2 dias</span></div>
+              <h3 class="font-semibold text-slate-900 text-lg mb-1">CTO Co-founder — Saúde+ Digital</h3>
+              <p class="text-sm text-slate-600 mb-3">Buscamos sócio técnico com experiência em telemedicina e escala. Equity generoso.</p>
+              <div class="flex items-center gap-3 text-sm flex-wrap">
+                <img src="https://ui-avatars.com/api/?name=Camila+Rocha&background=6d28d9&color=fff&size=32" class="w-7 h-7 rounded-full" alt="">
+                <span class="text-slate-700 font-medium">Camila Rocha</span><span class="text-slate-400">• Saúde+</span>
+                <button onclick="openModal('modal-opportunity')" class="ml-auto text-primary-700 font-medium hover:underline">Ver detalhes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div id="page-notifications" class="page hidden max-w-2xl mx-auto p-3 sm:p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold text-slate-900">Notificações</h1>
+            <button onclick="markAllRead()" class="text-sm text-primary-700 font-medium hover:underline">Marcar todas como lidas</button>
+          </div>
+          <div class="space-y-2">
+            <div onclick="openNotification(this)" class="notif-item notif-unread bg-white rounded-xl border border-slate-200 p-4 cursor-pointer hover:shadow-sm transition">
+              <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff&size=40" class="w-10 h-10 rounded-full flex-shrink-0" alt="">
+                <div><p class="text-sm text-slate-800"><strong>Ana Costa</strong> enviou uma solicitação de conexão</p><p class="text-xs text-slate-400 mt-1">há 15 min</p></div>
+              </div>
+            </div>
+            <div onclick="openNotification(this)" class="notif-item notif-unread bg-white rounded-xl border border-slate-200 p-4 cursor-pointer hover:shadow-sm transition">
+              <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff&size=40" class="w-10 h-10 rounded-full flex-shrink-0" alt="">
+                <div><p class="text-sm text-slate-800"><strong>Roberto Mendes</strong> comentou na sua publicação</p><p class="text-xs text-slate-400 mt-1">há 1 hora</p></div>
+              </div>
+            </div>
+            <div onclick="openNotification(this)" class="notif-item notif-unread bg-white rounded-xl border border-slate-200 p-4 cursor-pointer hover:shadow-sm transition">
+              <div class="flex gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-lg flex-shrink-0">💼</div>
+                <div><p class="text-sm text-slate-800">Nova oportunidade em <strong>Tecnologia</strong> que combina com seu perfil</p><p class="text-xs text-slate-400 mt-1">há 3 horas</p></div>
+              </div>
+            </div>
+            <div onclick="openNotification(this)" class="notif-item bg-white rounded-xl border border-slate-200 p-4 cursor-pointer hover:shadow-sm transition">
+              <div class="flex gap-3">
+                <img src="https://ui-avatars.com/api/?name=Fernanda+Lima&background=be123c&color=fff&size=40" class="w-10 h-10 rounded-full flex-shrink-0" alt="">
+                <div><p class="text-sm text-slate-800"><strong>Fernanda Lima</strong> aceitou sua solicitação de conexão</p><p class="text-xs text-slate-400 mt-1">ontem</p></div>
+              </div>
+            </div>
+            <div onclick="openNotification(this)" class="notif-item bg-white rounded-xl border border-slate-200 p-4 cursor-pointer hover:shadow-sm transition">
+              <div class="flex gap-3">
+                <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-lg flex-shrink-0">✅</div>
+                <div><p class="text-sm text-slate-800">Seu perfil foi <strong>verificado</strong> com sucesso</p><p class="text-xs text-slate-400 mt-1">há 2 dias</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div id="page-profile" class="page hidden max-w-3xl mx-auto p-3 sm:p-6">
+          <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-6">
+            <div class="h-32 sm:h-36 bg-gradient-to-r from-primary-800 to-primary-600 relative">
+              <button onclick="showToast('Upload de capa (demo)')" class="absolute top-3 right-3 bg-black/30 hover:bg-black/50 text-white text-xs px-3 py-1.5 rounded-lg backdrop-blur">Editar capa</button>
+            </div>
+            <div class="px-4 sm:px-6 pb-6">
+              <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-12">
+                <img src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1e40af&color=fff&size=128" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl ring-4 ring-white shadow-lg" alt="">
+                <div class="flex-1 pt-2 sm:pt-0 sm:pb-1">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Carlos Silva</h1>
+                    <span class="inline-flex items-center gap-1 text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-medium"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Verificado</span>
+                  </div>
+                  <p class="text-slate-600">CEO & Fundador • TechBrasil Soluções</p>
+                  <p class="text-sm text-slate-500">Tecnologia • São Paulo, SP</p>
+                </div>
+                <button onclick="openModal('modal-edit-profile')" class="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition self-start sm:self-auto">Editar perfil</button>
+              </div>
+              <p class="mt-5 text-slate-700 leading-relaxed">Empreendedor serial com 15 anos de experiência em software B2B. Fundei a TechBrasil em 2018, hoje com 80 colaboradores e presença em 12 estados. Apaixonado por inovação, networking de qualidade e construir pontes entre empresas.</p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full">SaaS</span>
+                <span class="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full">B2B</span>
+                <span class="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full">Cloud</span>
+                <span class="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full">Parcerias</span>
+                <span class="bg-slate-100 text-slate-700 text-xs font-medium px-3 py-1 rounded-full">Investimentos</span>
+              </div>
+              <div class="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-slate-100">
+                <div class="text-center"><p class="text-2xl font-bold text-slate-900">248</p><p class="text-xs text-slate-500">Conexões</p></div>
+                <div class="text-center"><p class="text-2xl font-bold text-slate-900">36</p><p class="text-xs text-slate-500">Publicações</p></div>
+                <div class="text-center"><p class="text-2xl font-bold text-slate-900">12</p><p class="text-xs text-slate-500">Comunidades</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 bizpoints-badge">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-semibold text-slate-900">BizPoints & Reputação</h2>
+              <button onclick="showPage('indications')" class="text-xs text-primary-700 font-medium hover:underline">Ver ranking</button>
+            </div>
+            <div class="flex items-center gap-4 flex-wrap">
+              <div class="text-center">
+                <p class="text-3xl font-bold text-amber-700" id="bizpoints-count">180</p>
+                <p class="text-xs text-slate-600">BizPoints</p>
+              </div>
+              <div class="flex-1 space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-semibold">⚡ Catalisador de Negócios</span>
+                </div>
+                <p class="text-xs text-slate-600">3 indicações com negócio fechado • 7 reuniões geradas</p>
+              </div>
+              <button onclick="openIndicateModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">Indicar conexão</button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6">
+            <h2 class="font-semibold text-slate-900 mb-3">Nível de verificação</h2>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                <span class="text-emerald-600 font-bold">✓</span>
+                <div class="flex-1"><p class="text-sm font-semibold text-slate-900">Verificado</p><p class="text-xs text-slate-500">CNPJ e LinkedIn validados</p></div>
+              </div>
+              <button onclick="openModal('modal-verification')" class="w-full text-left p-3 rounded-xl border border-dashed border-slate-300 hover:border-primary-400 hover:bg-primary-50 transition">
+                <p class="text-sm font-semibold text-slate-800">Solicitar Premium / Clube de Decisores</p>
+                <p class="text-xs text-slate-500">Curadoria humana ou convite de membro Premium</p>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6">
+            <h2 class="font-semibold text-slate-900 mb-3">Empresa</h2>
+            <div class="flex items-center gap-3 flex-wrap">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700 font-bold">TB</div>
+              <div><p class="font-medium text-slate-900">TechBrasil Soluções</p><p class="text-sm text-slate-500">CNPJ 12.345.678/0001-90 • Desde 2018</p></div>
+              <a href="#" class="ml-auto text-primary-700 text-sm font-medium hover:underline">techbrasil.com.br</a>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-5">
+            <h2 class="font-semibold text-slate-900 mb-3">Privacidade do perfil</h2>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center justify-between"><span class="text-slate-600">Quem pode ver meu perfil</span><span class="font-medium text-slate-900">Apenas conexões</span></div>
+              <div class="flex items-center justify-between"><span class="text-slate-600">Quem pode me enviar mensagem</span><span class="font-medium text-slate-900">Conexões e verificados</span></div>
+              <div class="flex items-center justify-between"><span class="text-slate-600">Exibir empresa e CNPJ</span><span class="font-medium text-emerald-600">Sim</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="page-settings" class="page hidden max-w-2xl mx-auto p-3 sm:p-6">
+          <h1 class="text-2xl font-bold text-slate-900 mb-6">Configurações</h1>
+          <div class="space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <h2 class="font-semibold text-slate-900 mb-4">Notificações</h2>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Mensagens novas</p><p class="text-xs text-slate-500">Receber alerta de mensagens</p></div><div onclick="toggleSetting(this)" class="toggle-switch on"></div></div>
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Solicitações de conexão</p><p class="text-xs text-slate-500">Quando alguém quiser conectar</p></div><div onclick="toggleSetting(this)" class="toggle-switch on"></div></div>
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Oportunidades</p><p class="text-xs text-slate-500">Novas oportunidades do seu segmento</p></div><div onclick="toggleSetting(this)" class="toggle-switch on"></div></div>
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">E-mail semanal</p><p class="text-xs text-slate-500">Resumo semanal por e-mail</p></div><div onclick="toggleSetting(this)" class="toggle-switch"></div></div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <h2 class="font-semibold text-slate-900 mb-4">Privacidade</h2>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Perfil visível para todos</p><p class="text-xs text-slate-500">Ou apenas conexões</p></div><div onclick="toggleSetting(this)" class="toggle-switch"></div></div>
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Mostrar status online</p></div><div onclick="toggleSetting(this)" class="toggle-switch on"></div></div>
+                <div class="flex items-center justify-between"><div><p class="text-sm font-medium text-slate-800">Autenticação em 2 fatores (2FA)</p><p class="text-xs text-slate-500">Segurança extra no login</p></div><div onclick="toggleSetting(this)" class="toggle-switch"></div></div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5">
+              <h2 class="font-semibold text-slate-900 mb-4">Conta</h2>
+              <button onclick="showToast('Alterar senha (demo)')" class="w-full text-left text-sm text-slate-700 py-2 hover:text-primary-700">Alterar senha</button>
+              <button onclick="showToast('Baixar meus dados (LGPD)')" class="w-full text-left text-sm text-slate-700 py-2 hover:text-primary-700">Baixar meus dados (LGPD)</button>
+              <button onclick="doLogout()" class="w-full text-left text-sm text-red-600 py-2 hover:text-red-700">Sair da conta</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLANS -->
+        <div id="page-plans" class="page hidden max-w-4xl mx-auto p-3 sm:p-6">
+          <h1 class="text-2xl font-bold text-slate-900 mb-2 text-center">Planos BizConnect</h1>
+          <p class="text-slate-500 text-sm text-center mb-8">Escolha o plano ideal para o seu networking</p>
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+              <h3 class="font-bold text-slate-900 text-lg">Gratuito</h3>
+              <p class="text-3xl font-bold text-slate-900 mt-2">R$ 0<span class="text-sm font-normal text-slate-500">/mês</span></p>
+              <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                <li>✓ Mensagens limitadas</li>
+                <li>✓ Feed básico</li>
+                <li>✓ 50 conexões</li>
+                <li>✓ 2 comunidades</li>
+              </ul>
+              <button class="w-full mt-6 border border-slate-200 text-slate-700 font-medium py-2.5 rounded-xl">Plano atual</button>
+            </div>
+            <div class="bg-white rounded-2xl border-2 border-primary-600 p-6 relative shadow-lg">
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full">Popular</span>
+              <h3 class="font-bold text-slate-900 text-lg">Profissional</h3>
+              <p class="text-3xl font-bold text-slate-900 mt-2">R$ 79<span class="text-sm font-normal text-slate-500">/mês</span></p>
+              <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                <li>✓ Mensagens ilimitadas</li>
+                <li>✓ Destaque no feed</li>
+                <li>✓ Conexões ilimitadas</li>
+                <li>✓ Verificação avançada</li>
+                <li>✓ Estatísticas</li>
+              </ul>
+              <button onclick="upgradePlan('Profissional')" class="w-full mt-6 bg-primary-700 hover:bg-primary-800 text-white font-semibold py-2.5 rounded-xl transition">Assinar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+              <h3 class="font-bold text-slate-900 text-lg">Empresarial</h3>
+              <p class="text-3xl font-bold text-slate-900 mt-2">R$ 249<span class="text-sm font-normal text-slate-500">/mês</span></p>
+              <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                <li>✓ Tudo do Profissional</li>
+                <li>✓ Contas múltiplas</li>
+                <li>✓ Comunidades privadas</li>
+                <li>✓ Suporte prioritário</li>
+                <li>✓ API de integração</li>
+              </ul>
+              <button onclick="upgradePlan('Empresarial')" class="w-full mt-6 bg-dark-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl transition">Assinar</button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- MATCHMAKING -->
+        <div id="page-matchmaking" class="page hidden max-w-3xl mx-auto p-3 sm:p-6">
+          <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Matchmaking</h1>
+              <p class="text-slate-500 text-sm mt-1">Conecte necessidades a soluções entre empresas</p>
+            </div>
+            <button onclick="openModal('modal-opp-ad')" class="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition">+ Anúncio de oportunidade</button>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6">
+            <h2 class="font-semibold text-slate-900 mb-4">Suas intenções de negócio</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Estou buscando</label>
+                <input id="intent-buscando" type="text" placeholder="Ex: investidor anjo, fornecedor de matéria-prima, canal de distribuição" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm" value="Canal de distribuição no Centro-Oeste">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Estou oferecendo</label>
+                <input id="intent-oferecendo" type="text" placeholder="Ex: capital para investimento, tecnologia proprietária, espaço físico" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm" value="Software B2B SaaS e parcerias comerciais">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Região</label>
+                  <select class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-sm outline-none"><option>Brasil</option><option>Sudeste</option><option>Centro-Oeste</option><option>Sul</option><option>Nordeste</option></select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Ticket médio</label>
+                  <select class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-sm outline-none"><option>Qualquer</option><option>Até R$ 50k</option><option>R$ 50k–500k</option><option>Acima de R$ 500k</option></select>
+                </div>
+              </div>
+              <button onclick="saveIntentions()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Salvar e buscar matches</button>
+            </div>
+          </div>
+
+          <div id="matches-list" class="space-y-3">
+            <h2 class="font-semibold text-slate-900">Matches sugeridos</h2>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-sm transition cursor-pointer" onclick="viewMatch('Ana Costa', 92)">
+              <div class="match-score high">92%</div>
+              <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff" class="w-12 h-12 rounded-full" alt="">
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-slate-900">Ana Costa · AgroTech</p>
+                <p class="text-sm text-slate-500 truncate">Oferece: distribuição IoT agro · Busca: software de gestão</p>
+              </div>
+              <button onclick="event.stopPropagation(); connectMatch()" class="text-primary-700 text-sm font-medium hover:underline flex-shrink-0">Conectar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-sm transition cursor-pointer" onclick="viewMatch('Diego Santos', 78)">
+              <div class="match-score mid">78%</div>
+              <img src="https://ui-avatars.com/api/?name=Diego+Santos&background=b45309&color=fff" class="w-12 h-12 rounded-full" alt="">
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-slate-900">Diego Santos · EcoPack</p>
+                <p class="text-sm text-slate-500 truncate">Oferece: embalagens · Busca: canais no Sudeste</p>
+              </div>
+              <button onclick="event.stopPropagation(); connectMatch()" class="text-primary-700 text-sm font-medium hover:underline flex-shrink-0">Conectar</button>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-sm transition cursor-pointer" onclick="viewMatch('Lucas Ferreira', 65)">
+              <div class="match-score mid">65%</div>
+              <img src="https://ui-avatars.com/api/?name=Lucas+Ferreira&background=15803d&color=fff" class="w-12 h-12 rounded-full" alt="">
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-slate-900">Lucas Ferreira · Ferreira Capital</p>
+                <p class="text-sm text-slate-500 truncate">Oferece: capital anjo · Busca: SaaS B2B com tração</p>
+              </div>
+              <button onclick="event.stopPropagation(); connectMatch()" class="text-primary-700 text-sm font-medium hover:underline flex-shrink-0">Conectar</button>
+            </div>
+            <p class="text-xs text-slate-400 text-center pt-2">Sugestões semanais também chegam por e-mail e notificação</p>
+          </div>
+        </div>
+
+        <!-- INDICAÇÕES / BIZPOINTS -->
+        <div id="page-indications" class="page hidden max-w-3xl mx-auto p-3 sm:p-6">
+          <div class="flex items-center justify-between mb-6 gap-3 flex-wrap">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Indicações & BizPoints</h1>
+              <p class="text-slate-500 text-sm mt-1">Reputação lastreada em negócios reais, não em curtidas</p>
+            </div>
+            <button onclick="openIndicateModal()" class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition">+ Indicar conexão</button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 mb-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+              <p class="text-2xl font-bold text-amber-700" id="bizpoints-count">180</p>
+              <p class="text-xs text-slate-500">BizPoints</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+              <p class="text-2xl font-bold text-slate-900">7</p>
+              <p class="text-xs text-slate-500">Reuniões geradas</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+              <p class="text-2xl font-bold text-emerald-600">3</p>
+              <p class="text-xs text-slate-500">Negócios fechados</p>
+            </div>
+          </div>
+
+          <h2 class="font-semibold text-slate-900 mb-3">Suas indicações</h2>
+          <div class="space-y-3 mb-8">
+            <div class="bg-white rounded-2xl border border-slate-200 p-4">
+              <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+                <p class="text-sm font-semibold text-slate-900">Você → Ana Costa → Roberto Mendes</p>
+                <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-medium">Negócio fechado</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">Parceria de distribuição · Confirmado por ambas as partes</p>
+              <p class="text-xs text-amber-700 font-medium">+50 BizPoints</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4">
+              <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+                <p class="text-sm font-semibold text-slate-900">Você → Lucas Ferreira → Patrícia Souza</p>
+                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">Reunião agendada</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">Possível investimento seed</p>
+              <div class="flex gap-2">
+                <button onclick="confirmIndication(this, 'meeting')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-medium">Confirmar reunião</button>
+                <button onclick="confirmIndication(this, 'deal')" class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-medium">Confirmar negócio</button>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-4">
+              <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+                <p class="text-sm font-semibold text-slate-900">Você → Camila Rocha → Diego Santos</p>
+                <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">Aguardando</span>
+              </div>
+              <p class="text-xs text-slate-500">Introdução feita há 2 dias</p>
+            </div>
+          </div>
+
+          <h2 class="font-semibold text-slate-900 mb-3">Ranking de Catalisadores (mês)</h2>
+          <div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100">
+            <div class="flex items-center gap-3 p-4">
+              <span class="text-lg font-bold text-amber-500 w-6">1</span>
+              <img src="https://ui-avatars.com/api/?name=Fernanda+Lima&background=be123c&color=fff&size=40" class="w-10 h-10 rounded-full" alt="">
+              <div class="flex-1"><p class="font-semibold text-slate-900 text-sm">Fernanda Lima</p><p class="text-xs text-slate-500">5 negócios fechados</p></div>
+              <span class="text-sm font-bold text-amber-700">320 pts</span>
+            </div>
+            <div class="flex items-center gap-3 p-4 bg-primary-50/50">
+              <span class="text-lg font-bold text-slate-400 w-6">2</span>
+              <img src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1e40af&color=fff&size=40" class="w-10 h-10 rounded-full" alt="">
+              <div class="flex-1"><p class="font-semibold text-slate-900 text-sm">Carlos Silva (você)</p><p class="text-xs text-slate-500">3 negócios fechados</p></div>
+              <span class="text-sm font-bold text-amber-700">180 pts</span>
+            </div>
+            <div class="flex items-center gap-3 p-4">
+              <span class="text-lg font-bold text-slate-400 w-6">3</span>
+              <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff&size=40" class="w-10 h-10 rounded-full" alt="">
+              <div class="flex-1"><p class="font-semibold text-slate-900 text-sm">Roberto Mendes</p><p class="text-xs text-slate-500">2 negócios fechados</p></div>
+              <span class="text-sm font-bold text-amber-700">120 pts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEARCH RESULTS -->
+        <div id="page-search-results" class="page hidden max-w-3xl mx-auto p-3 sm:p-6">
+          <h1 class="text-xl font-bold text-slate-900 mb-1">Resultados para "<span id="search-query-label">...</span>"</h1>
+          <p class="text-sm text-slate-500 mb-6">Empresários e empresas encontrados</p>
+          <div class="space-y-3">
+            <div class="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3">
+              <img src="https://ui-avatars.com/api/?name=Ana+Costa&background=0f766e&color=fff" class="w-12 h-12 rounded-full" alt="">
+              <div class="flex-1"><p class="font-semibold text-slate-900">Ana Costa</p><p class="text-sm text-slate-500">CEO • AgroTech • São Paulo</p></div>
+              <button onclick="connectUser(this, 'Ana Costa')" class="bg-primary-700 text-white text-sm font-medium px-4 py-2 rounded-xl">Conectar</button>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3">
+              <img src="https://ui-avatars.com/api/?name=Roberto+Mendes&background=7c3aed&color=fff" class="w-12 h-12 rounded-full" alt="">
+              <div class="flex-1"><p class="font-semibold text-slate-900">Roberto Mendes</p><p class="text-sm text-slate-500">Sócio • Mendes & Associados • RJ</p></div>
+              <button onclick="connectUser(this, 'Roberto Mendes')" class="bg-primary-700 text-white text-sm font-medium px-4 py-2 rounded-xl">Conectar</button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="bottom-nav lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 z-40 flex items-center justify-around h-14">
+      <button onclick="showPage('feed')" class="bottom-nav-item flex flex-col items-center gap-0.5 text-primary-700" data-page="feed">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <span class="text-[10px] font-medium">Feed</span>
+      </button>
+      <button onclick="showPage('network')" class="bottom-nav-item flex flex-col items-center gap-0.5 text-slate-400" data-page="network">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <span class="text-[10px] font-medium">Rede</span>
+      </button>
+      <button onclick="showPage('messages')" class="bottom-nav-item flex flex-col items-center gap-0.5 text-slate-400 relative" data-page="messages">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span class="text-[10px] font-medium">Chat</span>
+        <span class="absolute top-0 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+      <button onclick="showPage('opportunities')" class="bottom-nav-item flex flex-col items-center gap-0.5 text-slate-400" data-page="opportunities">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span class="text-[10px] font-medium">Oportun.</span>
+      </button>
+      <button onclick="showPage('profile')" class="bottom-nav-item flex flex-col items-center gap-0.5 text-slate-400" data-page="profile">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span class="text-[10px] font-medium">Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Search Overlay -->
+  <div id="search-overlay" class="hidden fixed inset-0 z-50 bg-white search-overlay">
+    <div class="max-w-2xl mx-auto p-4">
+      <div class="flex items-center gap-3 mb-6">
+        <button onclick="closeSearch()" class="p-2 text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+        <input id="search-input-main" type="text" placeholder="Buscar empresários, empresas..." class="flex-1 px-4 py-3 bg-slate-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500" onkeydown="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()" class="bg-primary-700 text-white px-4 py-3 rounded-xl text-sm font-medium">Buscar</button>
+      </div>
+      <p class="text-sm text-slate-500 mb-3">Sugestões</p>
+      <div class="space-y-2">
+        <button onclick="document.getElementById('search-input-main').value='Ana Costa'; doSearch();" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-50 text-sm">Ana Costa — AgroTech</button>
+        <button onclick="document.getElementById('search-input-main').value='tecnologia'; doSearch();" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-50 text-sm">Segmento: Tecnologia</button>
+        <button onclick="document.getElementById('search-input-main').value='São Paulo'; doSearch();" class="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-50 text-sm">Cidade: São Paulo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Profile -->
+  <div id="modal-edit-profile" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Editar perfil</h3>
+        <button onclick="closeModal('modal-edit-profile')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="space-y-4">
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Nome</label><input type="text" value="Carlos Silva" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500"></div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Cargo</label><input type="text" value="CEO & Fundador" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500"></div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Empresa</label><input type="text" value="TechBrasil Soluções" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500"></div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Biografia</label><textarea rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500">Empreendedor serial com 15 anos de experiência em software B2B.</textarea></div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Cidade</label><input type="text" value="São Paulo, SP" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500"></div>
+        <button onclick="saveProfile()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Topic -->
+  <div id="modal-topic" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Novo tópico</h3>
+        <button onclick="closeModal('modal-topic')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="space-y-4">
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Título</label><input id="new-topic-title" type="text" placeholder="Ex: Como precificar SaaS em 2026?" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500"></div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-1">Comunidade</label><select class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none bg-white"><option>Tecnologia & SaaS</option><option>Agronegócio & Foodtech</option><option>Saúde & Life Sciences</option></select></div>
+        <button onclick="createTopic()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Criar tópico</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Opportunity -->
+  <div id="modal-opportunity" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Detalhes da oportunidade</h3>
+        <button onclick="closeModal('modal-opportunity')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <p class="text-sm text-slate-600 mb-4">Entre em contato com o anunciante para saber mais sobre esta oportunidade de negócio. Ao demonstrar interesse, ele receberá uma notificação.</p>
+      <button onclick="applyOpportunity()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Demonstrar interesse</button>
+    </div>
+  </div>
+
+
+  <!-- Modal Match -->
+  <div id="modal-match" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Match de oportunidade</h3>
+        <button onclick="closeModal('modal-match')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="match-score high" id="match-modal-score">92%</div>
+        <div>
+          <p class="font-semibold text-slate-900" id="match-modal-name">Ana Costa</p>
+          <p class="text-sm text-slate-500">Compatibilidade alta com suas intenções</p>
+        </div>
+      </div>
+      <p class="text-sm text-slate-600 mb-4">Ela busca software de gestão e oferece canais de distribuição no agronegócio. Ideal para cruzar com o que você oferece.</p>
+      <button onclick="connectMatch()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Solicitar conexão</button>
+    </div>
+  </div>
+
+  <!-- Modal NDA / Sala Segura -->
+  <div id="modal-nda" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Ativar Sala Segura</h3>
+        <button onclick="closeModal('modal-nda')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="secure-banner rounded-xl p-3 mb-4 text-sm text-emerald-900">
+        Antes de trocar informações sensíveis, ambas as partes assinam um NDA digital na plataforma.
+      </div>
+      <div class="bg-slate-50 rounded-xl p-4 mb-4 text-sm text-slate-700 max-h-40 overflow-y-auto border border-slate-200">
+        <p class="font-semibold mb-2">Termo de Confidencialidade (NDA) — Minuta padrão</p>
+        <p class="text-xs leading-relaxed">As partes comprometem-se a manter sigilo sobre todas as informações comerciais, financeiras, técnicas e estratégicas compartilhadas nesta conversa. O descumprimento poderá ensejar medidas judiciais. A assinatura digital via token (e-mail/SMS) confere validade ao acordo. Log de auditoria (data, hora, IP e hash) fica disponível para download.</p>
+      </div>
+      <label class="flex items-start gap-2 mb-4 cursor-pointer">
+        <input type="checkbox" id="nda-accept" class="mt-1 rounded border-slate-300 text-primary-600">
+        <span class="text-sm text-slate-700">Li e aceito o Termo de Confidencialidade. Autorizo o envio de token por e-mail/SMS para validar a assinatura.</span>
+      </label>
+      <button onclick="signNDA()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition mb-2">Assinar NDA e ativar sala</button>
+      <button onclick="downloadNDAProof()" class="w-full text-sm text-slate-500 hover:text-slate-700 py-2">Baixar minuta em PDF</button>
+    </div>
+  </div>
+
+  <!-- Modal Indicar -->
+  <div id="modal-indicate" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Indicar conexão</h3>
+        <button onclick="closeModal('modal-indicate')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <p class="text-sm text-slate-500 mb-4">Apresente um contato a outro. Se resultar em reunião ou negócio, você ganha BizPoints.</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Quem você quer indicar?</label>
+          <input id="indicate-to" type="text" placeholder="Nome do empresário" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Para quem?</label>
+          <input id="indicate-for" type="text" placeholder="Nome de quem receberá a indicação" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Motivo (opcional)</label>
+          <input type="text" placeholder="Ex: possível parceria comercial" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+        </div>
+        <button onclick="submitIndication()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-xl transition">Registrar indicação</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Verificação / Clube -->
+  <div id="modal-verification" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Níveis de acesso</h3>
+        <button onclick="closeModal('modal-verification')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="space-y-3 mb-6">
+        <div class="p-3 rounded-xl border border-slate-200 bg-slate-50">
+          <p class="text-sm font-semibold text-slate-900">Básico (gratuito)</p>
+          <p class="text-xs text-slate-500">E-mail e telefone validados</p>
+        </div>
+        <div class="p-3 rounded-xl border border-emerald-200 bg-emerald-50">
+          <p class="text-sm font-semibold text-slate-900">Verificado ✓</p>
+          <p class="text-xs text-slate-500">CNPJ + LinkedIn + site — você já tem este nível</p>
+        </div>
+        <div class="p-3 rounded-xl border border-amber-200 bg-amber-50">
+          <p class="text-sm font-semibold text-slate-900">Premium / Clube de Decisores</p>
+          <p class="text-xs text-slate-500">Curadoria humana (videochamada 15 min) ou convite de um Premium</p>
+        </div>
+      </div>
+      <button onclick="requestVerification('premium')" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition mb-3">Solicitar curadoria (Premium)</button>
+      <div class="border-t border-slate-200 pt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Já tem código de convite?</label>
+        <div class="flex gap-2">
+          <input id="invite-code" type="text" placeholder="Código" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+          <button onclick="useInviteCode()" class="bg-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium">Validar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Anúncio de Oportunidade -->
+  <div id="modal-opp-ad" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Anúncio de oportunidade</h3>
+        <button onclick="closeModal('modal-opp-ad')" class="p-1 text-slate-400 hover:text-slate-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Título</label>
+          <input id="opp-ad-title" type="text" placeholder="Ex: Busco distribuidor no Centro-Oeste" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Tipo</label>
+          <select class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-sm outline-none">
+            <option>Buscando</option>
+            <option>Oferecendo</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Visibilidade</label>
+          <select class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-sm outline-none">
+            <option>Semipúblico (matches e conexões)</option>
+            <option>Privado (apenas matches)</option>
+          </select>
+        </div>
+        <button onclick="createOpportunityAd()" class="w-full bg-primary-700 hover:bg-primary-800 text-white font-semibold py-3 rounded-xl transition">Publicar anúncio</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
