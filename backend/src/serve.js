@@ -392,4 +392,136 @@ async function handler(req, res) {
         const me = db.users.find(u => u.id === userId);
         me.bizPoints = (me.bizPoints || 0) + 50;
         saveDb();
-        return send(res,
+        return send(res, 200, { connections: rows });
+    }
+    if (method === 'GET' && p.startsWith('/api/connections/status/')) {
+      const targetId = p.split('/')[4];
+      const c = db.connections.find(x =>
+        (x.userId === userId && x.targetId === targetId) || (x.userId === targetId && x.targetId === userId));
+      return send(res, 200, { status: c?.status || null });
+    }
+    if (method === 'POST' && /^\/api\/connections\/[^/]+$/.test(p) && !p.includes('status')) {
+      const targetId = p.split('/')[3];
+      if (targetId === userId) return send(res, 400, { error: 'Inválido' });
+      if (!db.users.find(u => u.id === targetId)) return send(res, 404, { error: 'Usuário não encontrado' });
+      const existing = db.connections.find(x =>
+        (x.userId === userId && x.targetId === targetId) || (x.userId === targetId && x.targetId === userId));
+      if (existing) {
+        if (existing.status === 'accepted') return send(res, 200, { status: 'accepted' });
+        if (existing.userId === userId) {
+          db.connections = db.connections.filter(c => c !== existing); saveDb();
+          return send(res, 200, { status: null });
+        }
+        existing.status = 'accepted';
+        db.notifications.unshift({ id: uuid(), userId: existing.userId, text: '<strong>Conexão aceita</strong>', read: false, createdAt: new Date().toISOString() });
+        saveDb();
+        return send(res, 200, { status: 'accepted' });
+      }
+      db.connections.push({ userId, targetId, status: 'pending', createdAt: new Date().toISOString() });
+      db.notifications.unshift({ id: uuid(), userId: targetId, text: '<strong>Nova solicitação de conexão</strong>', read: false, createdAt: new Date().toISOString() });
+      saveDb();
+      return send(res, 201, { status: 'pending' });
+    }
+
+    // MATCHMAKING
+    if (method === 'GET' && p === '/api/matchmaking/matches') {
+      const me = db.users.find(u => u.id === userId);
+      function score(a, b) {
+        let s = 40;
+        if (a.buscando && b.oferecendo) a.buscando.toLowerCase().split(/\s+/).forEach(w => { if (w.length > 3 && b.oferecendo.toLowerCase().includes(w)) s += 12; });
+        if (a.oferecendo && b.buscando) a.oferecendo.toLowerCase().split(/\s+/).forEach(w => { if (w.length > 3 && b.buscando.toLowerCase().includes(w)) s += 12; });
+        if (a.segment && a.segment === b.segment) s += 10;
+        return Math.min(99, Math.max(35, s));
+      }
+      const matches = db.users.filter(u => u.id !== userId).map(u => ({
+        user: { id: u.id, name: u.name, company: u.company, role: u.role, city: u.city, segment: u.segment, avatarBg: u.avatarBg, verified: u.verified, buscando: u.buscando, oferecendo: u.oferecendo },
+        score: score(me, u),
+      })).sort((a, b) => b.score - a.score).slice(0, 20);
+      return send(res, 200, { matches });
+    }
+    if (method === 'PUT' && p === '/api/matchmaking/intentions') {
+      const body = await readBody(req);
+      const me = db.users.find(u => u.id === userId);
+      me.buscando = body.buscando || '';
+      me.oferecendo = body.oferecendo || '';
+      saveDb();
+      return send(res, 200, { ok: true, buscando: me.buscando, oferecendo: me.oferecendo });
+    }
+
+    // NOTIFICATIONS
+    if (method === 'GET' && p === '/api/notifications') {
+      const rows = db.notifications.filter(n => n.userId === userId).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 50);
+      return send(res, 200, { notifications: rows, unread: rows.filter(n => !n.read).length });
+    }
+    if (method === 'POST' && p === '/api/notifications/read-all') {
+      db.notifications.forEach(n => { if (n.userId === userId) n.read = true; });
+      saveDb();
+      return send(res, 200, { ok: true });
+    }
+
+    // INDICATIONS
+    if (method === 'GET' && p === '/api/indications') {
+      return send(res, 200, { indications: db.indications.filter(i => i.fromUser === userId) });
+    }
+    if (method === 'GET' && p === '/api/indications/ranking') {
+      const ranking = [...db.users].sort((a, b) => (b.bizPoints || 0) - (a.bizPoints || 0)).slice(0, 10)
+        .map(u => ({ id: u.id, name: u.name, company: u.company, avatarBg: u.avatarBg, bizPoints: u.bizPoints || 0 }));
+      return send(res, 200, { ranking });
+    }
+    if (method === 'POST' && p === '/api/indications') {
+      const body = await readBody(req);
+      if (!body.toUser || !body.forUser) return send(res, 400, { error: 'toUser e forUser obrigatórios' });
+      const ind = { id: uuid(), fromUser: userId, toUser: body.toUser, forUser: body.forUser, note: body.note || '', status: 'pending', points: 0, createdAt: new Date().toISOString() };
+      db.indications.unshift(ind); saveDb();
+      return send(res, 201, ind);
+    }
+    if (method === 'POST' && /^\/api\/indications\/[^/]+\/confirm$/.test(p)) {
+      const id = p.split('/')[3];
+      const body = await readBody(req);
+      const ind = db.indications.find(i => i.id === id && i.fromUser === userId);
+      if (!ind) return send(res, 404, { error: 'Não encontrado' });
+      if (body.type === 'deal') {
+        ind.status = 'deal'; ind.points = 50;
+        const me = db.users.find(u => u.id === userId);
+        me.bizPoints = (me.bizPoints || 0) + 50;
+        saveDb();
+        return send(res, 200, { status: 'deal', points: 50, bizPoints: me.bizPoints });
+      }
+      ind.status = 'meeting'; saveDb();
+      return send(res, 200, { status: 'meeting' });
+    }
+
+    // OPPORTUNITIES
+    if (method === 'GET' && p === '/api/opportunities') {
+      const rows = db.opportunities.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(o => {
+        const u = db.users.find(x => x.id === o.userId);
+        return { id: o.id, type: o.type, title: o.title, description: o.description, createdAt: o.createdAt, userId: o.userId, userName: u?.name, company: u?.company, avatarBg: u?.avatarBg };
+      });
+      return send(res, 200, { opportunities: rows });
+    }
+    if (method === 'POST' && p === '/api/opportunities') {
+      const body = await readBody(req);
+      if (!body.title) return send(res, 400, { error: 'title obrigatório' });
+      const o = { id: uuid(), userId, type: body.type || 'Oportunidade', title: body.title, description: body.description || '', createdAt: new Date().toISOString() };
+      db.opportunities.unshift(o); saveDb();
+      return send(res, 201, { id: o.id });
+    }
+
+    send(res, 404, { error: 'Rota não encontrada', path: p });
+  } catch (err) {
+    console.error(err);
+    send(res, 500, { error: 'Erro interno', detail: String(err.message || err) });
+  }
+}
+
+// Seed if empty
+if (db.users.length === 0) {
+  require('./db/seed.js');
+  db = loadDb();
+}
+
+http.createServer(handler).listen(PORT, '0.0.0.0', () => {
+  console.log(`BizConnect API ouvindo em 0.0.0.0:${PORT}`);
+  console.log(`Health: /health`);
+  console.log(`Login demo: carlos.silva@empresa.com.br / 123456`);
+});
