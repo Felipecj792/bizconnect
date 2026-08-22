@@ -1,1 +1,13 @@
-kd
+{
+  "name": "bizconnect-backend",
+  "version": "1.0.0",
+  "description": "BizConnect API — Node.js puro (zero dependências npm)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/db/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
