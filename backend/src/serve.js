@@ -392,4 +392,43 @@ async function handler(req, res) {
         const me = db.users.find(u => u.id === userId);
         me.bizPoints = (me.bizPoints || 0) + 50;
         saveDb();
-        return send(res,
+                return send(res, 200, { status: 'deal', points: 50, bizPoints: me.bizPoints });
+      }
+      ind.status = 'meeting'; saveDb();
+      return send(res, 200, { status: 'meeting' });
+    }
+
+    // OPPORTUNITIES
+    if (method === 'GET' && p === '/api/opportunities') {
+      const rows = db.opportunities.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(o => {
+        const u = db.users.find(x => x.id === o.userId);
+        return { id: o.id, type: o.type, title: o.title, description: o.description, createdAt: o.createdAt, userId: o.userId, userName: u?.name, company: u?.company, avatarBg: u?.avatarBg };
+      });
+      return send(res, 200, { opportunities: rows });
+    }
+    if (method === 'POST' && p === '/api/opportunities') {
+      const body = await readBody(req);
+      if (!body.title) return send(res, 400, { error: 'title obrigatório' });
+      const o = { id: uuid(), userId, type: body.type || 'Oportunidade', title: body.title, description: body.description || '', createdAt: new Date().toISOString() };
+      db.opportunities.unshift(o); saveDb();
+      return send(res, 201, { id: o.id });
+    }
+
+    send(res, 404, { error: 'Rota não encontrada', path: p });
+  } catch (err) {
+    console.error(err);
+    send(res, 500, { error: 'Erro interno', detail: String(err.message || err) });
+  }
+}
+
+// Seed if empty
+if (db.users.length === 0) {
+  require('./db/seed.js');
+  db = loadDb();
+}
+
+http.createServer(handler).listen(PORT, '0.0.0.0', () => {
+  console.log(`BizConnect API ouvindo em 0.0.0.0:${PORT}`);
+  console.log(`Health: /health`);
+  console.log(`Login demo: carlos.silva@empresa.com.br / 123456`);
+});
