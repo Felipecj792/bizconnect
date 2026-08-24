@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: bizconnect-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: "echo ok"
+    startCommand: "node src/server.js"
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: JWT_SECRET
+        generateValue: true
