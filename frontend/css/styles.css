@@ -1,0 +1,176 @@
+/* BizConnect - Estilos customizados */
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+.message-bubble {
+  max-width: 75%;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar-item.active {
+  background: rgba(37, 99, 235, 0.15);
+  border-left: 3px solid #2563eb;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0f172a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 100;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.modal-backdrop {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.liked {
+  color: #2563eb !important;
+}
+
+.liked svg {
+  fill: #2563eb;
+}
+
+.bottom-nav {
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+
+.conn-pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.conn-connected {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.comment-box {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.search-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+.notif-unread {
+  background: #eff6ff;
+  border-left: 3px solid #2563eb;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #cbd5e1;
+  border-radius: 12px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.toggle-switch.on {
+  background: #2563eb;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle-switch.on::after {
+  transform: translateX(20px);
+}
+
+/* Match score ring */
+.match-score {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.match-score.high {
+  background: #d1fae5;
+  color: #047857;
+  border: 2px solid #34d399;
+}
+
+.match-score.mid {
+  background: #fef3c7;
+  color: #b45309;
+  border: 2px solid #fbbf24;
+}
+
+.match-score.low {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 2px solid #cbd5e1;
+}
+
+/* Secure room banner */
+.secure-banner {
+  background: linear-gradient(90deg, #ecfdf5, #d1fae5);
+  border: 1px solid #6ee7b7;
+}
+
+/* BizPoints badge */
+.bizpoints-badge {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #fbbf24;
+}
